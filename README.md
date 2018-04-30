@@ -6,7 +6,7 @@
 [![PyPi Version](https://img.shields.io/pypi/v/optipy.svg)](https://pypi.org/project/optipy)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/optipy.svg?logo=github&label=Stars)](https://github.com/nschloe/optipy)
 
-optipy is a small collection of optimization/minimization methods. It's
+optipy contains a generic optimization/minimization method. Its creation was
 motivated by the absence of an implementation of Newton's method with a custom
 Hessian solver in SciPy (see [this
 bug](https://github.com/scipy/scipy/issues/8756)).
@@ -45,6 +45,9 @@ This is basically the exact Newton method. When setting `get_search_direction`
 to `lambda x, grad: -grad`, one gets the steepest descent method. For larger
 computations, one will typically replace this with a tailored solver, e.g., a
 preconditioned Krylov solver.
+
+The return type is largely compatible with SciPy's generic return type,
+[OptmizeResult](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult).
 
 
 ### Installation
