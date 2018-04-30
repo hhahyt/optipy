@@ -2,8 +2,7 @@
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/optipy/master.svg)](https://circleci.com/gh/nschloe/optipy)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/optipy.svg)](https://codecov.io/gh/nschloe/optipy)
-[![Codacy grade](https://img.shields.io/codacy/grade/8ce98e78f7ef427292593d08815c4fa3.svg)](https://app.codacy.com/app/nschloe/optipy/dashboard)
-[![awesome](https://img.shields.io/badge/awesome-yes-ff69b4.svg)](https://github.com/nschloe/optipy)
+[![Codacy grade](https://img.shields.io/codacy/grade/2741eedd98a24ee0b65319c1f436f40e.svg)](https://app.codacy.com/app/nschloe/optipy/dashboard)
 [![PyPi Version](https://img.shields.io/pypi/v/optipy.svg)](https://pypi.org/project/optipy)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/optipy.svg?logo=github&label=Stars)](https://github.com/nschloe/optipy)
 
