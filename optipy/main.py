@@ -8,6 +8,7 @@ import numpy
 import scipy.optimize
 
 
+# pylint: disable=too-many-arguments,too-many-locals
 def minimize(fun, x0, jac, get_search_direction, atol, maxiter=None):
     '''Generic minimization routine.
     '''

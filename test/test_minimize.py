@@ -3,7 +3,6 @@
 import matplotlib.tri
 import matplotlib.pyplot as plt
 import numpy
-import scipy.optimize
 
 import optipy
 
@@ -21,9 +20,11 @@ def test_gradient():
             2*b*(x[1] - x[0]**2)
             ])
 
+    # pylint: disable=unused-argument
     def get_search_direction(x, grad):
         return -grad
 
+    # import scipy.optimize
     # sol = scipy.optimize.minimize(
     #     fun=fun,
     #     x0=[-1.0, 3.5],
