@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.tri
-import matplotlib.pyplot as plt
 import numpy
 
 import optipy
@@ -75,23 +73,6 @@ def test_newton():
 
     assert abs(sol.x[0] - a) < 1.0e-5
     assert abs(sol.x[1] - a**2) < 1.0e-5
-    return
-
-
-def plot(f, n=10):
-    x = numpy.linspace(-2, +2, n)
-    y = numpy.linspace(0, +4, n)
-    X, Y = numpy.meshgrid(x, y)
-    XY = numpy.stack([X, Y])
-
-    z = numpy.array(f(XY), dtype=float)
-
-    triang = matplotlib.tri.Triangulation(X.flatten(), Y.flatten())
-    plt.tripcolor(triang, z.flatten(), shading='flat')
-    plt.colorbar()
-
-    plt.set_cmap('viridis')
-    plt.gca().set_aspect('equal')
     return
 
 
