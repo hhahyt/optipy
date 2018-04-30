@@ -3,6 +3,7 @@
 import matplotlib.tri
 import matplotlib.pyplot as plt
 import numpy
+import scipy.optimize
 
 import optipy
 
@@ -23,6 +24,13 @@ def test_gradient():
     def get_search_direction(x, grad):
         return -grad
 
+    # sol = scipy.optimize.minimize(
+    #     fun=fun,
+    #     x0=[-1.0, 3.5],
+    #     jac=jac,
+    #     )
+    # print(sol)
+
     sol = optipy.minimize(
         fun=fun,
         x0=[-1.0, 3.5],
@@ -31,8 +39,8 @@ def test_gradient():
         atol=1.0e-5
         )
 
-    assert abs(sol[0] - a) < 1.0e-4
-    assert abs(sol[1] - a**2) < 1.0e-4
+    assert abs(sol.x[0] - a) < 1.0e-4
+    assert abs(sol.x[1] - a**2) < 1.0e-4
     return
 
 
@@ -64,12 +72,8 @@ def test_newton():
         atol=1.0e-5
         )
 
-    plot(fun, n=100)
-    plt.show()
-    exit(1)
-
-    assert abs(sol[0] - a) < 1.0e-5
-    assert abs(sol[1] - a**2) < 1.0e-5
+    assert abs(sol.x[0] - a) < 1.0e-5
+    assert abs(sol.x[1] - a**2) < 1.0e-5
     return
 
 
@@ -91,5 +95,5 @@ def plot(f, n=10):
 
 
 if __name__ == '__main__':
-    # test_gradient()
-    test_newton()
+    test_gradient()
+    # test_newton()

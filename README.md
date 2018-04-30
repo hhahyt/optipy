@@ -13,6 +13,41 @@ Hessian solver in SciPy (see [this
 bug](https://github.com/scipy/scipy/issues/8756)).
 
 
+The mandatory Rosenbrock example:
+```python
+a = 1.0
+b = 100.0
+
+def fun(x):
+    return (a-x[0])**2 + b*(x[1] - x[0]**2)**2
+
+def jac(x):
+    return numpy.array([
+        -2*(a-x[0]) - 4*b*(x[1] - x[0]**2) * x[0],
+        2*b*(x[1] - x[0]**2)
+        ])
+
+def hess_inv(x, grad):
+    hess = numpy.array([
+        [2 + 8*b*x[0]**2 - 4*b*(x[1] - x[0]**2), -4*b*x[0]],
+        [-4*b*x[0], 2*b]
+        ])
+    return -numpy.linalg.solve(hess, grad)
+
+sol = optipy.minimize(
+    fun=fun,
+    x0=[-1.0, 3.5],
+    jac=jac,
+    get_search_direction=hess_inv,
+    atol=1.0e-5
+    )
+```
+This is basically the exact Newton method. When setting `get_search_direction`
+to `lambda x, grad: -grad`, one gets the steepest descent method. For larger
+computations, one will typically replace this with a tailored solver, e.g., a
+preconditioned Krylov solver.
+
+
 ### Installation
 
 optipy is [available from the Python Package
