@@ -1,72 +1,42 @@
 # -*- coding: utf-8 -*-
 #
-import pybtex
-import pybtex.database
+import numpy
 
-import betterbib
+import optipy
 
 
-def test_update():
-    entry1 = pybtex.database.Entry(
-        'article',
-        fields={
-            'title': 'Yes',
-            'year': 2000,
-            },
-        persons={'author': [pybtex.database.Person('Doe, John')]}
+def test_newton():
+    a = 1.0
+    b = 100.0
+
+    def fun(x):
+        return (a-x[0])**2 + b*(x[1] - x[0]**2)**2
+
+    def jac(x):
+        return numpy.array([
+            -2*(a-x[0]) - 4*b*(x[1] - x[0]**2) * x[0],
+            2*b*(x[1] - x[0]**2)
+            ])
+
+    def hess_inv(x, rhs):
+        hess = numpy.array([
+            [2 + 8*b*x[0]**2 - 4*b*(x[1] - x[0]**2), -4*b*x[0]],
+            [-4*b*x[0], 2*b]
+            ])
+        return numpy.linalg.solve(hess, rhs)
+
+    sol = optipy.newton(
+        fun=fun,
+        x0=[5.0, 4.0],
+        jac=jac,
+        hess_inv=hess_inv,
+        atol=1.0e-5
         )
-    entry2 = pybtex.database.Entry(
-        'book',
-        fields={
-            'title': 'No',
-            'pages': '1-19',
-            },
-        persons={'author': [pybtex.database.Person('Doe, John')]}
-        )
-    reference = pybtex.database.Entry(
-        'book',
-        fields={
-            'title': 'No',
-            'year': 2000,
-            'pages': '1-19',
-            },
-        persons={'author': [pybtex.database.Person('Doe, John')]}
-        )
 
-    merged = betterbib.update(entry1, entry2)
-
-    assert betterbib.pybtex_to_bibtex_string(merged, 'key', sort=True) \
-        == betterbib.pybtex_to_bibtex_string(reference, 'key', sort=True)
-
+    assert abs(sol[0] - a) < 1.0e-5
+    assert abs(sol[1] - a**2) < 1.0e-5
     return
 
 
-def test_journal_name():
-    shrt = pybtex.database.Entry(
-        'article',
-        fields={'journal': u'SIAM J. Matrix Anal. Appl.'}
-        )
-    lng = pybtex.database.Entry(
-        'article',
-        fields={'journal': u'SIAM Journal on Matrix Analysis and Applications'}
-        )
-
-    tmp = lng
-    updater = betterbib.JournalNameUpdater()
-    updater.update(tmp)
-    assert tmp.fields['journal'] == shrt.fields['journal']
-
-    lng = pybtex.database.Entry(
-        'article',
-        fields={'journal': u'SIAM Journal on Matrix Analysis and Applications'}
-        )
-    tmp = shrt
-    updater = betterbib.JournalNameUpdater(long_journal_names=True)
-    updater.update(tmp)
-    assert tmp.fields['journal'] == lng.fields['journal']
-    return
-
-
-def test_month_range():
-    assert betterbib.translate_month('June-July') == 'jun # "-" # jul'
-    return
+if __name__ == '__main__':
+    test_newton()

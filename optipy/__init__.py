@@ -9,6 +9,7 @@ from .__about__ import (
     __website__,
     )
 
+from .newton import newton
 
 # try:
 #     import pipdate
