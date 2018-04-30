@@ -9,7 +9,7 @@ from .__about__ import (
     __website__,
     )
 
-from .newton import newton
+from .main import minimize
 
 # try:
 #     import pipdate
