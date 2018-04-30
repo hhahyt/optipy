@@ -2,19 +2,19 @@ version: 2
 
 jobs:
   build:
-    working_directory: ~/optipy
+    working_directory: ~/work
     docker:
       - image: ubuntu:18.04
     steps:
       - run: apt update
-      - run: apt install -y git python3-pip enchant
+      - run: apt install -y git python3-pip
       - run: pip3 install -U pytest pytest-cov pylint
       - checkout
       - run: pip3 install .
       # lint
       - run: pylint setup.py optipy/ test/*.py
       # The tests
-      - run: cd test/ && pytest --maxfail=1 --cov betterbib
+      - run: cd test/ && pytest --maxfail=1 --cov optipy
       # submit to codecov
       - run: apt install -y curl
       - run: bash <(curl -s https://codecov.io/bash)
